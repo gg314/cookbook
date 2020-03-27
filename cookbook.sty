@@ -1,0 +1,79 @@
+\ProvidesPackage{cookbook}
+
+\newcommand\fullpageimage[2]{
+    \newgeometry{margin=0in}
+    \begin{figure}[p]
+        \centering
+        \includegraphics[width=\paperwidth,height=\paperheight]{#1}
+        \caption{#2}
+    \end{figure}
+    \restoregeometry
+    \clearpage
+}
+
+
+\newcommand\source[1]{
+	\small
+	\textbf{Source: }\textit{#1} \\
+	\normalsize
+}
+
+\newcommand\cooktime[1]{
+	\small
+	\textbf{Time: }\textit{#1} \\
+	\normalsize
+}
+
+\newcommand\yield[1]{
+	\small
+	\textbf{Yield: }\textit{#1} \\
+	\normalsize
+}
+
+\usepackage{array}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand\ingredients[1]{
+    \sffamily
+    \bfseries
+    \vspace{.25em}
+    \begin{tabularx}{5in}{ R{5em} X }
+        #1
+    \end{tabularx}
+    \vspace{0em}
+    \mdseries
+}
+
+\newcommand\ingredientsLeft[1]{
+    \sffamily
+    \bfseries
+    \vspace{.15em}
+    \begin{tabularx}{5in}{ R{0em} X }
+        #1
+    \end{tabularx}
+    \vspace{0em}
+    \mdseries
+}
+
+\newenvironment{recipe} {
+}{
+    \clearpage
+}
+
+\newcommand\pre[1]{
+    \begin{shaded}
+        \textit{#1}
+    \end{shaded}
+    \vspace{.15em}
+}
+
+\newcommand\tip[1]{
+    \vspace{1em}
+    {\it Tip:#1}
+}
+
+\let\oldcolumnbreak\columnbreak
+\renewcommand\columnbreak[0]{
+    \vfill
+    \oldcolumnbreak
+}

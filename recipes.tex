@@ -1,0 +1,217 @@
+\documentclass[landscape,12pt,openany]{book}
+
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\usepackage[margin=.75in, paperwidth=8.25in, paperheight=10.75in]{geometry}
+\usepackage{titlesec}
+\usepackage{xfrac}
+\usepackage{hyperref}
+\usepackage{gensymb}
+\usepackage[abs]{overpic}
+\setlength\unitlength{1in}
+\usepackage{color}
+\usepackage{framed}
+\usepackage[svgnames, dvipsnames]{xcolor}
+\definecolor{shadecolor}{gray}{0.9}
+
+
+
+\newcommand\myshade{30}
+\colorlet{mylinkcolor}{Aquamarine}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{violet}
+
+\hypersetup{
+	linkcolor  = mylinkcolor!\myshade!black,
+	citecolor  = mycitecolor!\myshade!black,
+	urlcolor   = myurlcolor!\myshade!black,
+	colorlinks = true,
+}
+
+\usepackage{background}
+\usetikzlibrary{calc}
+\usepackage{ifthen}
+
+% background common settings
+\SetBgScale{1}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgContents{}
+
+% auxiliary counter
+\newcounter{chapshift}
+\addtocounter{chapshift}{-1}
+
+% the list of colors to be used (add more if needed)
+\newcommand\BoxColor{%
+	\ifcase\thechapshift red!10\or orange!10\or olive!10\or teal!15\or blue!12\or magenta!10\or black!10\or green!10\or yellow!20\or red!10\or orange!10\else olive!10\fi}
+
+% the main command; the mandatory argument sets the color of the vertical box
+\makeatletter
+\newcommand\ChapFrame{%
+	\AddEverypageHook{%
+		\ifthenelse{\isodd{\thepage}}
+		{\SetBgContents{%
+				\begin{tikzpicture}[overlay,remember picture]
+				\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
+				text height=4cm,align=center,anchor=north east] 
+				at ($ (current page.north east) + (-0cm,-2*\thechapshift cm) $) 
+				{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
+							\raggedright\textcolor{black}{\scshape\leftmark}}}};
+				\end{tikzpicture}}%
+		}
+		{\SetBgContents{%
+				\begin{tikzpicture}[overlay,remember picture]
+				\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
+				text height=4cm,align=center,anchor=north west] 
+				at ($ (current page.north west) + (-0cm,-2*\thechapshift cm) $) 
+				{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
+							\raggedright\textcolor{black}{\scshape\leftmark}}}};
+				\end{tikzpicture}}
+		}
+		\bg@material}%
+	\stepcounter{chapshift}
+}
+\makeatother
+
+% redefinition of \chaptermark to contain only the title
+\renewcommand\chaptermark[1]{\markboth{#1}{}} 
+
+
+
+
+
+
+
+\usepackage{cookbook}  % custom style
+
+\titlespacing*{\chapter}{0em}{-3em}{1em}
+\titleformat{\chapter}{\normalfont\huge\bfseries}{\chaptertitlename\
+	\thechapter:}{20pt}{\Huge}
+\renewcommand{\thesection}{}  % don't show the section numbers
+\titleformat{\section}[block]{\titlerule\scshape\large\filcenter\vspace{2pt}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}[block]{\scshape\large\filcenter}{}{0em}{}[\titlerule]
+\setlength{\parindent}{0em}
+\setlength{\columnseprule}{0.4pt}
+\pagestyle{plain}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\renewcommand\cup{c.~}
+\newcommand\cups{\cup}
+
+\newcommand\lb{lb.~}
+\newcommand\lbs{\lb}
+
+\renewcommand\t{t.~}
+\newcommand\tsp{\t}
+
+\newcommand\T{T.~}
+\newcommand\Tbsp{\T}
+\newcommand\tbsp{\T}
+
+\newcommand\oz{oz.~}
+\newcommand\ounce{\oz}
+\newcommand\ounces{\oz}
+
+\newcommand\qt{qt.~}
+\newcommand\quart{\qt}
+\newcommand\quarts{\qt}
+
+\begin{document}
+	
+	\rmfamily
+	
+	\setlength{\columnseprule}{0pt}
+	\columnsep=2em
+		
+	\setcounter{tocdepth}{1}
+	\small
+	\tableofcontents
+	
+	\normalsize
+	
+	\setlength{\parskip}{.5em}
+	
+	\chapter{Appetizers}
+	\ChapFrame
+	\include{appetizers/goat_cheese_stuffed_peppers}
+	\include{appetizers/salami_and_gruyere_gougeres}
+	\include{appetizers/zaatar_spiced_beet_dip}
+	\include{appetizers/samosadillas}
+	
+	\chapter{Breads}
+	\ChapFrame
+	\include{breads/blueberry_scones}
+	\include{breads/apple_scones}
+	\include{breads/green_chile_cheese_biscuits}
+	\include{breads/zucchini_bread}
+	\include{breads/one_hour_rolls}
+	\include{breads/homemade_thin-crust_pizza}
+	
+	\chapter{Salads}
+	\ChapFrame
+	\input{salads/thai_peanut_quinoa_salad}
+	\input{salads/potato_and_arugula_salad}
+	
+	\chapter{Soups}
+	\ChapFrame
+	\input{soups/cauliflower_turmeric_soup}
+	\input{soups/carrot-tahini_soup}
+	
+	\chapter{Side Dishes}
+	\ChapFrame
+	\input{sides/creamy_mashed_potatoes}
+	\input{sides/spicy_asian_brussel_sprouts}
+	\input{sides/cilantro_lime_rice}
+
+	
+	\chapter{Entrees}
+	\ChapFrame
+	\input{entrees/pork_scaloppine}
+	\input{entrees/lime_cilantro_chicken_fajitas}
+	\input{entrees/cheesy_lentils_beans_and_rice}
+	\input{entrees/baked_ziti}
+	\input{entrees/lasagna}
+	% hasselback kielbasa & sausages w/ potatoes and red cabbage
+	
+	\chapter{Slow Cooker}
+	\ChapFrame
+	\input{slowcooker/honey_soy_chicken}
+	\input{slowcooker/mississippi_roast}
+	\input{slowcooker/mongolian_beef}
+	\input{slowcooker/beef_stew}
+	\input{slowcooker/potato_kielbasa_soup}
+	\input{slowcooker/tuscan_chicken}
+	\input{slowcooker/butter_chicken}
+	\input{slowcooker/tortellini_spinach_chicken_soup}
+	\input{slowcooker/pulled_pork}
+	% apple butter, plum butter
+	
+	\chapter{Breakfast}
+	\ChapFrame
+	\input{breakfast/orange_ricotta_pancakes}
+	\input{breakfast/bombay_breakfast_potatoes}
+	
+	
+	\chapter{Desserts}
+	\ChapFrame
+	\input{desserts/coffee_spice_cookies}
+	\input{desserts/apple_butterscotch_cookies}
+	\input{desserts/vegan_pumpkin_cookies}
+	\input{desserts/pumpkin_maple_muffins}
+	\input{desserts/guava_cream_cheese_pop_tarts}
+	\input{desserts/rosemary_shortbread_cookies}
+	
+	% chocolate chip cookies
+	
+	\chapter{Cocktails}
+	\input{cocktails/trinidad_sour}
+	% trinidad sour
+	
+	\ChapFrame
+	
+	
+\end{document}
