@@ -1,3 +1,6 @@
+# Ignore the actual PDF (for the time being)
+recipes.pdf 
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
