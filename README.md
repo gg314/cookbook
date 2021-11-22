@@ -1,3 +1,6 @@
+# Preview
+![Recipe preview](preview.png)
+
 # Cookbook Contents
 ### :grapes: Appetizers
 ### :bread: Breads
@@ -9,3 +12,5 @@
 ### :egg: Breakfast
 ### :custard: Deserts
 ### :tropical_drink: Cocktails
+
+Images and recipes are temporary / for demonstration purposes only.

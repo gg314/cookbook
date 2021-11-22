@@ -1,5 +1,25 @@
 \ProvidesPackage{cookbook}
 
+% table of contents stuff
+% https://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tocloft/tocloft.pdf
+\renewcommand{\cftchapafterpnum}{\vspace{2pt}}
+\renewcommand{\cftchapfont}{\bfseries\sffamily}
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftchappagefont}{\bfseries\sffamily}
+\renewcommand{\cfttoctitlefont}{\brandonfont}
+\renewcommand{\contentsname}{\empty}
+\renewcommand{\contentsname}{\empty}
+\renewcommand{\cftbeforetoctitleskip}{0pt}
+\renewcommand{\cftaftertoctitleskip}{0pt}
+
+\renewcommand*{\cftsecdotsep}{4.5}  % use dots in the section entries
+% \renewcommand*{\cftsecnumwidth}{3em} % increase space for Roman numerals
+\renewcommand*{\cftsecindent}{-0.5em} % reduce indent of subsubsection titles
+
+
+
+
 \newcommand\fullpageimage[2]{
     \newgeometry{margin=0in}
     \begin{figure}[p]
@@ -11,60 +31,73 @@
     \clearpage
 }
 
-
-\newcommand\source[1]{
+\newcommand\zyield[1]{
 	\small
-	\textbf{Source: }\textit{#1} \\
+	\texttt{\fasUtensils}\enspace#1
 	\normalsize
 }
 
-\newcommand\cooktime[1]{
+\newcommand\zcooktime[1]{
 	\small
-	\textbf{Time: }\textit{#1} \\
+	\texttt{\farClock}\enspace#1
 	\normalsize
 }
 
-\newcommand\yield[1]{
+\newcommand\zsource[1]{
 	\small
-	\textbf{Yield: }\textit{#1} \\
+	\texttt{\farAddressCard}\enspace#1
 	\normalsize
 }
+
+\newcommand\yieldsourcetime[3]{\zyield{#1}\hfill\zsource{#2}\hfill\zcooktime{#3}}
+\newcommand\yieldtime[2]{\zyield{#1}\hfill\zcooktime{#2}}
+\newcommand\yieldsource[2]{\zyield{#1}\hfill\zsource{#2}}
+\newcommand\sourcetime[2]{\zsource{#1}\hfill\zcooktime{#2}}
 
 \usepackage{array}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
-\newcommand\ingredients[1]{
-    \sffamily
-    \bfseries
-    \vspace{.25em}
-    \begin{tabularx}{5in}{ R{5em} X }
-        #1
-    \end{tabularx}
-    \vspace{0em}
-    \mdseries
+\setlength{\columnsep}{1.5cm}
+\setlength{\columnseprule}{0.2pt}
+\renewcommand{\columnseprulecolor}{\color[rgb]{.91,.69,.616}}
+
+\newcommand\ingredientlist[1]{
+	\vspace{-.5em}
+	{\sffamily
+		\small
+		\bfseries
+		\vspace{.25em}
+		\begin{center}
+			\begin{minipage}[c]{0.9\textwidth}
+				\begin{multicols}{2}
+					\setstretch{1.2}
+					#1
+				\end{multicols}
+			\end{minipage}
+		\end{center}
+		\vspace{0.25em}
+	}
 }
 
-\newcommand\ingredientsLeft[1]{
-    \sffamily
-    \bfseries
-    \vspace{.15em}
-    \begin{tabularx}{5in}{ R{0em} X }
-        #1
-    \end{tabularx}
-    \vspace{0em}
-    \mdseries
-}
-
-\newenvironment{recipe} {
+\newenvironment{recipe}{
 }{
     \clearpage
 }
 
+\definecolor{shadecolor}{gray}{0.95}
+\definecolor{linecolor}{gray}{0.825}
+\mdfsetup{backgroundcolor=shadecolor, linecolor=linecolor, roundcorner=2pt}
+
 \newcommand\pre[1]{
-    \begin{shaded}
-        \textit{#1}
-    \end{shaded}
-    \vspace{.15em}
+	\vspace{0.25em}
+	{
+		\seriffont
+	    \begin{mdframed}
+	    	\vspace{0.25em}
+	        \textit{#1}
+	    \end{mdframed}
+	}
+	\vspace{-0.25em}
 }
 
 \newcommand\tip[1]{
@@ -77,3 +110,20 @@
     \vfill
     \oldcolumnbreak
 }
+
+% fake small caps: https://tex.stackexchange.com/questions/55664/fake-small-caps-with-xetex-fontspec/225078#225078
+\makeatletter
+\newlength\fake@f
+\newlength\fake@c
+\makeatother
+\newcommand\fauxsc[1]{\fauxschelper#1 \relax\relax}
+\def\fauxschelper#1 #2\relax{%
+	\fauxschelphelp#1\relax\relax%
+	\if\relax#2\relax\else\ \fauxschelper#2\relax\fi%
+}
+\def\fauxschelphelp#1#2\relax{%
+	\ifnum`#1=\lccode`#1\relax\scalebox{\Hscale}[\Vscale]{\char\uccode`#1}\else%
+	\scalebox{\Cscale}[1]{#1}\fi%
+	\ifx\relax#2\relax\else\fauxschelphelp#2\relax\fi}
+\def\Hscale{.80}\def\Vscale{.84}\def\Cscale{1.0}
+
