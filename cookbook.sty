@@ -62,27 +62,30 @@
 \renewcommand{\columnseprulecolor}{\color[rgb]{.91,.69,.616}}
 
 \newcommand\ingredientlist[1]{
-	\vspace{-.5em}
+	\vspace{-0.825em}
 	{\sffamily
 		\small
 		\bfseries
 		\vspace{.25em}
 		\begin{center}
 			\begin{minipage}[c]{0.9\textwidth}
+				\let\@afterindentfalse\@afterindenttrue % we want \parindent anywhere
+				\setlength{\leftskip}{1.0em}%
+				\setlength{\parindent}{-\leftskip}
+				\setlength{\parskip}{0.375em}%
 				\begin{multicols}{2}
-					\setstretch{1.2}
+				% \setstretch{1.2}
 					#1
 				\end{multicols}
 			\end{minipage}
 		\end{center}
 		\vspace{0.25em}
 	}
+	\vspace{-.125em}
 }
 
-\newenvironment{recipe}{
-}{
-    \clearpage
-}
+\newenvironment{recipe}{}{\clearpage}
+\newenvironment{cocktail}{}{\vspace{.5in}}
 
 \definecolor{shadecolor}{gray}{0.95}
 \definecolor{linecolor}{gray}{0.825}
@@ -127,3 +130,108 @@
 	\ifx\relax#2\relax\else\fauxschelphelp#2\relax\fi}
 \def\Hscale{.80}\def\Vscale{.84}\def\Cscale{1.0}
 
+
+% Headers and footers:
+\fancypagestyle{plain}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[CE,CO]{} % \leftmark
+\fancyfoot[RO]{{\small\dinlightfont\leftmark}~{\small\dinfont\thepage}}
+\fancyfoot[LE]{{\small\dinfont\thepage}~{\small\dinlightfont\leftmark}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[CE,CO]{} % \leftmark
+\fancyfoot[RO]{{\small\dinlightfont\leftmark}~{\small\dinfont\thepage}}
+\fancyfoot[LE]{{\small\dinfont\thepage}~{\small\dinlightfont\leftmark}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\definecolor{color1}{HTML}{e0c2b8}
+\definecolor{color2}{HTML}{e0ceb8}
+\definecolor{color3}{HTML}{bee0b8}
+\definecolor{color4}{HTML}{b8e0dd}
+\definecolor{color5}{HTML}{b8c7e0}
+\definecolor{color6}{HTML}{cab8e0}
+\definecolor{color7}{HTML}{e0dab8}
+\definecolor{color8}{HTML}{e0dfb8}
+\definecolor{color9}{HTML}{e0b8b9}
+\definecolor{color10}{HTML}{d5d5e0}
+\definecolor{color11}{HTML}{aabbcc}
+\definecolor{color12}{HTML}{aabbcc}
+% Chapter tabs on each page; the mandatory argument sets the color of the vertical box
+\usepackage{ifthen}
+% the list of colors to be used (add more if needed)
+\newcommand\BoxColor{%
+	\ifcase\thechapshift color1\or color2\or color3\or color4\or color5\or color6\or color7\or color8\or color9\or color10\or color11\else color12\fi}
+\makeatletter
+\newcommand\ChapFrame{%
+	\AddEverypageHook{%
+		\ifthenelse{\isodd{\thepage}}
+		{\SetBgContents{%
+				\begin{tikzpicture}[overlay,remember picture]
+					\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
+					text height=4cm,align=center,anchor=north east]
+					at ($ (current page.north east) + (-0cm,-2*\thechapshift cm) $)
+					{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
+								\raggedright\textcolor{black}{\dinfont\leftmark}}}};
+			\end{tikzpicture}}%
+		}
+		{\SetBgContents{%
+				\begin{tikzpicture}[overlay,remember picture]
+					\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
+					text height=4cm,align=center,anchor=north west]
+					at ($ (current page.north west) + (-0cm,-2*\thechapshift cm) $)
+					{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
+								\raggedright\textcolor{black}{\dinfont\leftmark}}}};
+			\end{tikzpicture}}
+		}
+		\bg@material}%
+	\stepcounter{chapshift}
+}
+\makeatother
+
+% redefinition of \chaptermark to contain only the title
+\renewcommand\chaptermark[1]{\markboth{#1}{}}
+
+
+
+
+\makeatletter
+\let\@chapterimage\relax
+\newcommand\chapterimage[1]{%
+	\if\relax\detokenize{#1}\relax
+	\else
+	\gdef\@chapterimage{
+		\begin{center}
+			\includegraphics[width=5in,height=5in,keepaspectratio]{#1}
+			\vspace{0.5in}
+		\end{center}
+	}
+	\fi
+}
+
+%\titleformat{\chapter}[display]{\Huge\chapterlabelfont}{\chaptertitlename~\thechapter\filcenter}{0pt}{\brandonshadowfont\fontsize{46}{54}\selectfont\filcenter}{}
+
+\titleformat{\chapter}[display]
+{\Huge\chapterlabelfont}
+{
+	{\@chapterimage}
+	\chaptertitlename~\thechapter\filcenter
+}
+{0pt}
+{
+	\brandonshadowfont\fontsize{42}{48}\selectfont\filcenter#1
+}
+
+\newcommand\nochapterimage{
+	\let\@chapterimage\relax
+}
+\makeatother
+
+
+\renewcommand{\thesection}{}  % don't show the section numbers
+\titleformat{\section}[block]{\brandonfont\fontsize{26}{36}\selectfont#1\filcenter}{}{0em}{}[\vspace{10pt}]
+\titleformat{\subsection}[block]{\scshape\large#1\filcenter}{}{0em}{}[\titlerule]
+\setlength{\parindent}{0em}

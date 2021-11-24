@@ -1,6 +1,6 @@
 % Compile with LuaLaTeX
 
-\documentclass[sans-serif,landscape,11pt,openany]{book}
+\documentclass[landscape,11pt,openany]{book}
 
 \def\mytitle{Cookbook}
 \def\myauthor{Rachel \& Graham}
@@ -11,10 +11,9 @@
 \usepackage[no-math]{fontspec}
 \usepackage[empty]{fullpage}
 \usepackage{tabularx}
-\usepackage[explicit]{titlesec} % to do: use..
+\usepackage[explicit]{titlesec} % title/header control
 \usepackage{graphicx}
 \usepackage[tmargin=1.0in, rmargin=1.0in, bmargin=1.25in, lmargin=1.0in, footskip=0.375in, paperwidth=8.5in, paperheight=11.0in]{geometry}
-\usepackage{titlesec}
 \usepackage{xfrac}
 \usepackage[colorlinks,hidelinks,breaklinks=true,linkcolor={[rgb]{0.0,0.0,0.0}},urlcolor={[rgb]{0.15,0.42,0.63}},unicode,plainpages=false,pdfpagelabels,pdftitle={\mytitle},pdfauthor={\myauthor},pdfkeywords={\mykeywords}]{hyperref}
 \usepackage{fancyhdr}
@@ -44,27 +43,12 @@
 \newfontfamily\dinfont[Color=303030]{DINPro}
 \newfontfamily\slabfont[Color=9c3a19]{NexaSlab-xBold}
 \newfontfamily\seriffont[Ligatures={TeX,Common},BoldFont={PalatinoLTStd-Bold},ItalicFont={PalatinoLTStd-Italic}]{PalatinoLTStd}
-\setmainfont[Ligatures={TeX,Common},BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
-\setsansfont[Ligatures={TeX,Common},BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
+\setmainfont[BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
+\setsansfont[BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
 % luaotfload-tool -uvvvv >fontdbupdates.log
 % luaotfload-tool --list=format
 
 
-\fancypagestyle{plain}
-\fancyhf{} % clear all header and footer fields
-\fancyfoot[CE,CO]{} % \leftmark
-\fancyfoot[RO]{{\small\dinlightfont\leftmark}~{\small\dinfont\thepage}}
-\fancyfoot[LE]{{\small\dinfont\thepage}~{\small\dinlightfont\leftmark}}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-
-\pagestyle{fancy}
-\fancyhf{} % clear all header and footer fields
-\fancyfoot[CE,CO]{} % \leftmark
-\fancyfoot[RO]{{\small\dinlightfont\leftmark}~{\small\dinfont\thepage}}
-\fancyfoot[LE]{{\small\dinfont\thepage}~{\small\dinlightfont\leftmark}}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
 
 % background. can't be removed, don't remember why
 \usepackage{background}
@@ -81,82 +65,6 @@
 \newcommand\header[1]{{\slabfont{\fauxsc{#1}}}}
 \newcommand\smallheader[1]{\textbf{\footnotesize{\MakeUppercase{#1}}}}
 
-
-% chapter tabs on each page; the mandatory argument sets the color of the vertical box
-\usepackage{ifthen}
-% the list of colors to be used (add more if needed)
-\newcommand\BoxColor{%
-	\ifcase\thechapshift red!10\or orange!10\or olive!10\or teal!15\or blue!12\or magenta!10\or black!10\or green!10\or yellow!20\or red!10\or orange!10\else olive!10\fi}
-\makeatletter
-\newcommand\ChapFrame{%
-	\AddEverypageHook{%
-		\ifthenelse{\isodd{\thepage}}
-		{\SetBgContents{%
-				\begin{tikzpicture}[overlay,remember picture]
-				\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
-				text height=4cm,align=center,anchor=north east]
-				at ($ (current page.north east) + (-0cm,-2*\thechapshift cm) $)
-				{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
-							\raggedright\textcolor{black}{\dinfont\leftmark}}}};
-				\end{tikzpicture}}%
-		}
-		{\SetBgContents{%
-				\begin{tikzpicture}[overlay,remember picture]
-				\node[fill=\BoxColor,inner sep=0pt,rectangle,text width=0.9cm,
-				text height=4cm,align=center,anchor=north west]
-				at ($ (current page.north west) + (-0cm,-2*\thechapshift cm) $)
-				{\rotatebox{90}{\hspace*{.3cm}\parbox[c][0.3cm][t]{3.4cm}{%
-							\raggedright\textcolor{black}{\dinfont\leftmark}}}};
-				\end{tikzpicture}}
-		}
-		\bg@material}%
-	\stepcounter{chapshift}
-}
-\makeatother
-
-% redefinition of \chaptermark to contain only the title
-\renewcommand\chaptermark[1]{\markboth{#1}{}}
-
-
-
-
-\makeatletter
-\let\@chapterimage\relax
-\newcommand\chapterimage[1]{%
-	\if\relax\detokenize{#1}\relax
-	\else
-	\gdef\@chapterimage{
-		\begin{center}
-			\includegraphics[width=5in,height=5in,keepaspectratio]{#1}
-			\vspace{0.5in}
-		\end{center}
-	}
-	\fi
-}
-
-%\titleformat{\chapter}[display]{\Huge\chapterlabelfont}{\chaptertitlename~\thechapter\filcenter}{0pt}{\brandonshadowfont\fontsize{46}{54}\selectfont\filcenter}{}
-
-\titleformat{\chapter}[display]
-{\Huge\chapterlabelfont}
-{
-	{\@chapterimage}
-	\chaptertitlename~\thechapter\filcenter
-}
-{0pt}
-{
-	\brandonshadowfont\fontsize{46}{54}\selectfont\filcenter#1
-}
-
-\newcommand\nochapterimage{
-	\let\@chapterimage\relax
-}
-\makeatother
-
-
-\renewcommand{\thesection}{}  % don't show the section numbers
-\titleformat{\section}[block]{\brandonfont\fontsize{26}{36}\selectfont#1\filcenter}{}{0em}{}[\vspace{10pt}]
-\titleformat{\subsection}[block]{\scshape\large#1\filcenter}{}{0em}{}[\titlerule]
-\setlength{\parindent}{0em}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
@@ -201,74 +109,84 @@
 	\chapter{Appetizers}\ChapFrame\newpage
 	\include{appetizers/goat_cheese_stuffed_peppers}
 	\include{appetizers/salami_and_gruyere_gougeres}
-	\include{appetizers/zaatar_spiced_beet_dip}
 	\include{appetizers/samosadillas}
+	\include{appetizers/zaatar_spiced_beet_dip}
 
 	\chapterimage{drawings/breads.png}
 	\chapter{Breads}\ChapFrame\newpage
-	\include{breads/blueberry_scones}
 	\include{breads/apple_scones}
+	\include{breads/blueberry_scones}
 	\include{breads/green_chile_cheese_biscuits}
-	\include{breads/zucchini_bread}
-	\include{breads/one_hour_rolls}
 	\include{breads/homemade_thin-crust_pizza}
+	\include{breads/one_hour_rolls}
+	\include{breads/zucchini_bread}
 
 	\chapterimage{drawings/salads.png}
 	\chapter{Salads}\ChapFrame\newpage
-	\input{salads/thai_peanut_quinoa_salad}
 	\input{salads/potato_and_arugula_salad}
+	\input{salads/thai_peanut_quinoa_salad}
 
 	\chapterimage{drawings/soups.png}
 	\chapter{Soups}\ChapFrame\newpage
-	\input{soups/cauliflower_turmeric_soup}
-	\input{soups/carrot-tahini_soup}
 	\input{soups/beer_cheese_soup}
+	\input{soups/carrot_ginger_soup}
+	\input{soups/carrot-tahini_soup}
+	\input{soups/cauliflower_turmeric_soup}
+	\input{soups/goose_blind_chili}
 	\input{slowcooker/potato_kielbasa_soup}
 
 	\chapterimage{drawings/side-dishes.png}
 	\chapter{Side Dishes}\ChapFrame\newpage
-	\input{sides/creamy_mashed_potatoes}
-	\input{sides/spicy_asian_brussel_sprouts}
+	\input{sides/balsamic_roasted_pears}
 	\input{sides/cilantro_lime_rice}
+	\input{sides/creamy_mashed_potatoes}
+	\input{sides/potato_salad}
+	\input{sides/roasted_cumin_carrots}
+	\input{sides/spicy_asian_brussel_sprouts}
 
 
 	\chapterimage{drawings/entrees.png}
 	\chapter{Entrees}\ChapFrame\newpage
-	\input{entrees/pork_scaloppine}
+	\input{entrees/baked_ziti}
+	\input{entrees/barbecued_flank_steak}
+	\input{entrees/grilled_salmon}
+	\input{entrees/hotdish}
+	\input{entrees/lasagna}
 	\input{entrees/lime_cilantro_chicken_fajitas}
 	\input{entrees/cheesy_lentils_beans_and_rice}
-	\input{entrees/baked_ziti}
-	\input{entrees/lasagna}
 	\input{entrees/pasta_aglio_e_olio}
-	\input{entrees/hotdish}
+	\input{entrees/pork_scaloppine}
 	% hasselback kielbasa & sausages w/ potatoes and red cabbage
 
 	\chapterimage{drawings/slow-cooker.png}
 	\chapter{Slow Cooker}\ChapFrame\newpage
+	\input{slowcooker/butter_chicken}
+	\input{slowcooker/pulled_pork}
 	\input{slowcooker/honey_soy_chicken}
 	\input{slowcooker/mississippi_roast}
 	\input{slowcooker/mongolian_beef}
 	\input{slowcooker/beef_stew}
-	\input{slowcooker/tuscan_chicken}
-	\input{slowcooker/butter_chicken}
 	\input{slowcooker/tortellini_spinach_chicken_soup}
-	\input{slowcooker/pulled_pork}
+	\input{slowcooker/tuscan_chicken}
 	% apple butter, plum butter
 
 	\chapterimage{drawings/breakfast.png}
 	\chapter{Breakfast}\ChapFrame\newpage
-	\input{breakfast/orange_ricotta_pancakes}
 	\input{breakfast/bombay_breakfast_potatoes}
+	\input{breakfast/orange_ricotta_pancakes}
 
 
 	\chapterimage{drawings/desserts.png}
 	\chapter{Desserts}\ChapFrame\newpage
-	\input{desserts/coffee_spice_cookies}
 	\input{desserts/apple_butterscotch_cookies}
-	\input{desserts/vegan_pumpkin_cookies}
-	\input{desserts/pumpkin_maple_muffins}
+	\input{desserts/chocolate_chip_cookies}
+	\input{desserts/coffee_spice_cookies}
+	\input{desserts/fudge_brownies}
 	\input{desserts/guava_cream_cheese_pop_tarts}
+	\input{desserts/pumpkin_maple_muffins}
 	\input{desserts/rosemary_shortbread_cookies}
+	\input{desserts/rustic_jam_shortbread_tart}
+	\input{desserts/vegan_pumpkin_cookies}
 
 	% chocolate chip cookies
 
