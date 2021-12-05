@@ -42,7 +42,8 @@
 \newfontfamily\dinlightfont[Color=606060]{DINPro-Light}
 \newfontfamily\dinfont[Color=303030]{DINPro}
 \newfontfamily\slabfont[Color=9c3a19]{NexaSlab-xBold}
-\newfontfamily\seriffont[Ligatures={TeX,Common},BoldFont={PalatinoLTStd-Bold},ItalicFont={PalatinoLTStd-Italic}]{PalatinoLTStd}
+%\newfontfamily\seriffont[Ligatures={TeX,Common},BoldFont={PalatinoLTStd-Bold},ItalicFont={PalatinoLTStd-Italic}]{PalatinoLTStd}
+\newfontfamily\seriffont[Ligatures={TeX,Common},BoldFont={Palatino Linotype Bold},ItalicFont={Palatino Linotype Italic}]{Palatino Linotype}
 \setmainfont[BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
 \setsansfont[BoldFont={DINPro-Bold},ItalicFont={DINPro-Italic}]{DINPro}
 % luaotfload-tool -uvvvv >fontdbupdates.log
@@ -76,9 +77,11 @@
 
 \renewcommand\t{t.~}
 \newcommand\tsp{\t}
+\newcommand\tsps{\t}
 
 \newcommand\T{T.~}
 \newcommand\Tbsp{\T}
+\newcommand\Tbsps{\T}
 \newcommand\tbsp{\T}
 
 \newcommand\oz{oz.~}
@@ -105,47 +108,49 @@
 	\setlength{\columnsep}{1.5cm}
 
 
-	\chapterimage{drawings/appetizers.png}
+	\chapterimage{drawings/appetizers.jpg}
 	\chapter{Appetizers}\ChapFrame\newpage
 	\include{appetizers/goat_cheese_stuffed_peppers}
 	\include{appetizers/salami_and_gruyere_gougeres}
 	\include{appetizers/samosadillas}
 	\include{appetizers/zaatar_spiced_beet_dip}
 
-	\chapterimage{drawings/breads.png}
+	\chapterimage{drawings/breads.jpg}
 	\chapter{Breads}\ChapFrame\newpage
-	\include{breads/apple_scones}
-	\include{breads/blueberry_scones}
 	\include{breads/green_chile_cheese_biscuits}
 	\include{breads/homemade_thin-crust_pizza}
 	\include{breads/one_hour_rolls}
+	\include{breads/pretzels}
 	\include{breads/zucchini_bread}
 
-	\chapterimage{drawings/salads.png}
+	\chapterimage{drawings/salads.jpg}
 	\chapter{Salads}\ChapFrame\newpage
 	\input{salads/potato_and_arugula_salad}
 	\input{salads/thai_peanut_quinoa_salad}
 
-	\chapterimage{drawings/soups.png}
+	\chapterimage{drawings/soups.jpg}
 	\chapter{Soups}\ChapFrame\newpage
 	\input{soups/beer_cheese_soup}
+	\input{soups/beer_cheese_soup_v2}
 	\input{soups/carrot_ginger_soup}
 	\input{soups/carrot-tahini_soup}
 	\input{soups/cauliflower_turmeric_soup}
 	\input{soups/goose_blind_chili}
 	\input{slowcooker/potato_kielbasa_soup}
 
-	\chapterimage{drawings/side-dishes.png}
+	\chapterimage{drawings/side-dishes.jpg}
 	\chapter{Side Dishes}\ChapFrame\newpage
 	\input{sides/balsamic_roasted_pears}
 	\input{sides/cilantro_lime_rice}
 	\input{sides/creamy_mashed_potatoes}
 	\input{sides/potato_salad}
+	\input{sides/red_cabbage}
 	\input{sides/roasted_cumin_carrots}
+	\input{sides/spaetzle}
 	\input{sides/spicy_asian_brussel_sprouts}
 
 
-	\chapterimage{drawings/entrees.png}
+	\chapterimage{drawings/entrees.jpg}
 	\chapter{Entrees}\ChapFrame\newpage
 	\input{entrees/baked_ziti}
 	\input{entrees/barbecued_flank_steak}
@@ -158,7 +163,7 @@
 	\input{entrees/pork_scaloppine}
 	% hasselback kielbasa & sausages w/ potatoes and red cabbage
 
-	\chapterimage{drawings/slow-cooker.png}
+	\chapterimage{drawings/slow-cooker.jpg}
 	\chapter{Slow Cooker}\ChapFrame\newpage
 	\input{slowcooker/butter_chicken}
 	\input{slowcooker/pulled_pork}
@@ -170,27 +175,29 @@
 	\input{slowcooker/tuscan_chicken}
 	% apple butter, plum butter
 
-	\chapterimage{drawings/breakfast.png}
+	\chapterimage{drawings/breakfast.jpg}
 	\chapter{Breakfast}\ChapFrame\newpage
+	\include{breads/apple_scones}
 	\input{breakfast/bombay_breakfast_potatoes}
+	\include{breads/blueberry_scones}
 	\input{breakfast/orange_ricotta_pancakes}
+	\input{breakfast/overnight_waffles}
 
 
-	\chapterimage{drawings/desserts.png}
+	\chapterimage{drawings/desserts.jpg}
 	\chapter{Desserts}\ChapFrame\newpage
 	\input{desserts/apple_butterscotch_cookies}
 	\input{desserts/chocolate_chip_cookies}
 	\input{desserts/coffee_spice_cookies}
 	\input{desserts/fudge_brownies}
 	\input{desserts/guava_cream_cheese_pop_tarts}
+	\input{desserts/nut_goodie_bars}
 	\input{desserts/pumpkin_maple_muffins}
 	\input{desserts/rosemary_shortbread_cookies}
 	\input{desserts/rustic_jam_shortbread_tart}
 	\input{desserts/vegan_pumpkin_cookies}
 
-	% chocolate chip cookies
-
-	\chapterimage{drawings/cocktails.png}
+	\chapterimage{drawings/cocktails.jpg}
 	\chapter{Cocktails}\ChapFrame\newpage
 	\input{cocktails/sparkling_elderflower}
 	\input{cocktails/trinidad_sour}
